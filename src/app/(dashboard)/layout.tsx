@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import { LogoutButton } from '@/components/logout-button'
 import { cn } from '@/lib/utils'
 import { 
   LayoutDashboard, 
@@ -324,15 +325,7 @@ export default function DashboardLayout({ children }: LayoutProps) {
                   {user?.email || 'admin@kelio.com'}
                 </p>
               </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleLogout}
-                className="flex-shrink-0 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 rounded-xl"
-                title="Déconnexion"
-              >
-                <LogOut className="h-4 w-4" />
-              </Button>
+              <LogoutButton />
             </div>
           </div>
         </div>
