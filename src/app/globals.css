@@ -1,26 +1,621 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    /* SYSTÈME DE COULEURS ADAPTATIF - Compatible Light & Dark Mode */
+    /* Palette neutre universelle avec adaptation automatique */
+    
+    /* === COULEURS DE BASE === */
+    --color-background: oklch(0.98 0.003 240);     /* Blanc ultra-doux, neutre */
+    --color-foreground: oklch(0.25 0.005 240);     /* Gris foncé lisible */
+    
+    /* === SURFACES === */
+    --color-card: oklch(0.995 0.002 240);          /* Cartes presque invisibles */
+    --color-card-foreground: oklch(0.25 0.005 240);
+    --color-popover: oklch(0.995 0.002 240);
+    --color-popover-foreground: oklch(0.25 0.005 240);
+    
+    /* === COULEURS FONCTIONNELLES === */
+    --color-primary: oklch(0.55 0.18 258);         /* Bleu moderne */
+    --color-primary-foreground: oklch(0.995 0.002 240);
+    
+    --color-secondary: oklch(0.45 0.03 240);       /* Gris neutre */
+    --color-secondary-foreground: oklch(0.98 0.003 240);
+    
+    --color-muted: oklch(0.96 0.003 240);          /* Zone muted très douce */
+    --color-muted-foreground: oklch(0.45 0.005 240);
+    
+    --color-accent: oklch(0.70 0.15 45);           /* Orange discret */
+    --color-accent-foreground: oklch(0.25 0.005 240);
+    
+    /* === ÉTATS === */
+    --color-destructive: oklch(0.65 0.18 25);      /* Rouge équilibré */
+    --color-destructive-foreground: oklch(0.995 0.002 240);
+    
+    --color-success: oklch(0.65 0.15 142);         /* Vert harmonieux */
+    --color-warning: oklch(0.75 0.15 75);          /* Orange attention */
+    --color-info: oklch(0.65 0.15 258);            /* Bleu information */
+    
+    /* === STRUCTURE === */
+    --color-border: oklch(0.92 0.003 240);         /* Bordures ultra-subtiles */
+    --color-input: oklch(0.975 0.002 240);         /* Inputs discrets */
+    --color-ring: oklch(0.55 0.18 258);            /* Focus ring */
+    
+    /* === VARIABLES BUSINESS === */
+    --color-neutral: oklch(0.50 0.003 240);
+    --color-revenue: oklch(0.65 0.15 142);
+    --color-expense: oklch(0.65 0.18 25);
+    --color-pending: oklch(0.75 0.15 75);
+    --color-completed: oklch(0.55 0.18 258);
+    
+    /* === BRIDGE VARIABLES TAILWIND === */
+    --background: 240 3% 98%;                      /* Fond ultra-doux */
+    --foreground: 240 5% 25%;                      /* Texte principal */
+    
+    --card: 240 2% 99.5%;                          /* Cartes invisibles */
+    --card-foreground: 240 5% 25%;
+    
+    --popover: 240 2% 99.5%;
+    --popover-foreground: 240 5% 25%;
+    
+    --primary: 258 18% 55%;                        /* Bleu principal */
+    --primary-foreground: 240 2% 99.5%;
+    
+    --secondary: 240 3% 45%;                       /* Gris neutre */
+    --secondary-foreground: 240 3% 98%;
+    
+    --muted: 240 3% 96%;                           /* Zone muted */
+    --muted-foreground: 240 5% 45%;
+    
+    --accent: 45 15% 70%;                          /* Orange accent */
+    --accent-foreground: 240 5% 25%;
+    
+    --destructive: 25 18% 65%;                     /* Rouge */
+    --destructive-foreground: 240 2% 99.5%;
+    
+    --border: 240 3% 92%;                          /* Bordures */
+    --input: 240 2% 97.5%;                         /* Inputs */
+    --ring: 258 18% 55%;                           /* Focus */
+    
+    --success: 142 15% 65%;                        /* Statuts */
+    --warning: 75 15% 75%;
+    --info: 258 15% 65%;
+    
+    /* Variables CSS pour faciliter les transitions */
+    --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+    
+    /* Espacements harmoniques basés sur la suite de Fibonacci */
+    --space-xs: 0.25rem;
+    --space-sm: 0.5rem;
+    --space-md: 0.75rem;
+    --space-lg: 1rem;
+    --space-xl: 1.5rem;
+    --space-2xl: 2rem;
+    --space-3xl: 3rem;
+    --space-4xl: 4rem;
+    
+    /* Rayons de bordure harmoniques */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    
+    /* Ombres sophistiquées */
+    --shadow-sm: 0 1px 2px color-mix(in oklch, var(--color-foreground), transparent 90%);
+    --shadow-md: 0 4px 6px color-mix(in oklch, var(--color-foreground), transparent 85%), 0 2px 4px color-mix(in oklch, var(--color-foreground), transparent 90%);
+    --shadow-lg: 0 10px 15px color-mix(in oklch, var(--color-foreground), transparent 80%), 0 4px 6px color-mix(in oklch, var(--color-foreground), transparent 85%);
+    --shadow-xl: 0 20px 25px color-mix(in oklch, var(--color-foreground), transparent 75%), 0 10px 10px color-mix(in oklch, var(--color-foreground), transparent 85%);
+    
+    /* Transitions fluides */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Animations spring */
+    --spring-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --spring-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  /* Base styles */
+  * {
+    margin: 0;
+    padding: 0;
+    border: 0 solid transparent;
+    border-color: var(--color-border);
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    height: 100%;
+    font-family: var(--font-primary);
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    height: 100%;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-primary);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    font-weight: 400;
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Typography améliorée */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+
+  h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+  }
+
+  h2 {
+    font-size: 1.875rem;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+  }
+
+  h4 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  /* Amélioration des liens */
+  a {
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  a:hover {
+    color: color-mix(in oklch, var(--color-primary), var(--color-foreground) 20%);
+  }
+
+  /* Focus states améliorés */
+  *:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Boutons avec styles premium */
+  button {
+    font-family: inherit;
+    font-feature-settings: inherit;
+    font-variation-settings: inherit;
+    font-size: 100%;
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
+    cursor: pointer;
+    transition: all var(--transition-normal);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Cards avec styles ultra-harmonieux et adaptatifs */
+  .card {
+    background: var(--color-card);
+    border: 2px solid var(--color-border);
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15), 
+                0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2),
+                0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: color-mix(in oklch, var(--color-border), var(--color-primary) 40%);
+    transform: translateY(-2px);
+  }
+
+  /* Inputs avec styles ultra-raffinés */
+  input, textarea, select {
+    background: var(--color-input);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 0.75rem;
+    font-family: inherit;
+    font-size: inherit;
+    transition: all var(--transition-normal);
+    color: var(--color-foreground);
+  }
+
+  input:focus, textarea:focus, select:focus {
+    background: var(--color-background);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px color-mix(in oklch, var(--color-primary), transparent 88%);
+    outline: none;
+  }
+
+  input:hover, textarea:hover, select:hover {
+    border-color: color-mix(in oklch, var(--color-border), var(--color-primary) 15%);
+  }
+
+  /* Scrollbars customisées */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-muted);
+    border-radius: var(--radius-sm);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-muted-foreground);
+  }
+
+  /* Animations personnalisées */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.4s var(--spring-smooth) forwards;
+  }
+
+  .animate-slide-in {
+    animation: slideIn 0.3s var(--spring-smooth) forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.2s var(--spring-bounce) forwards;
+  }
+
+  /* Utilitaires pour les gradients ultra-harmonieux */
+  .gradient-warm {
+    background: linear-gradient(135deg, 
+      oklch(0.95 0.008 45), 
+      oklch(0.96 0.006 40)
+    );
+  }
+
+  .gradient-cool {
+    background: linear-gradient(135deg, 
+      oklch(0.95 0.008 225), 
+      oklch(0.96 0.006 220)
+    );
+  }
+
+  .gradient-primary {
+    background: linear-gradient(135deg, 
+      var(--color-primary), 
+      color-mix(in oklch, var(--color-primary), var(--color-accent) 25%)
+    );
+  }
+
+  /* Glass effect ultra-subtil pour les overlays */
+  .glass-effect {
+    background: color-mix(in oklch, var(--color-background), transparent 8%);
+    backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid color-mix(in oklch, var(--color-border), transparent 40%);
+  }
+
+  /* États pour les statuts */
+  .status-success {
+    background: color-mix(in oklch, var(--color-success), transparent 90%);
+    color: var(--color-success);
+    border-color: color-mix(in oklch, var(--color-success), transparent 70%);
+  }
+
+  .status-warning {
+    background: color-mix(in oklch, var(--color-warning), transparent 90%);
+    color: var(--color-warning);
+    border-color: color-mix(in oklch, var(--color-warning), transparent 70%);
+  }
+
+  .status-error {
+    background: color-mix(in oklch, var(--color-destructive), transparent 90%);
+    color: var(--color-destructive);
+    border-color: color-mix(in oklch, var(--color-destructive), transparent 70%);
+  }
+
+  .status-info {
+    background: color-mix(in oklch, var(--color-info), transparent 90%);
+    color: var(--color-info);
+    border-color: color-mix(in oklch, var(--color-info), transparent 70%);
+  }
+
+  /* Métriques KPI avec adaptation automatique dark mode */
+  .metric-card {
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-normal);
+  }
+
+  .metric-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: color-mix(in oklch, var(--color-border), var(--color-primary) 20%);
+    transform: translateY(-2px);
+  }
+
+  .metric-icon-bg {
+    background: color-mix(in oklch, var(--color-primary), transparent 92%);
+    color: var(--color-primary);
+  }
+
+  .metric-blue {
+    background: color-mix(in oklch, oklch(0.65 0.15 258), transparent 92%);
+    color: oklch(0.55 0.18 258);
+  }
+
+  .metric-purple {
+    background: color-mix(in oklch, oklch(0.65 0.15 285), transparent 92%);
+    color: oklch(0.55 0.18 285);
+  }
+
+  .metric-green {
+    background: color-mix(in oklch, var(--color-success), transparent 92%);
+    color: var(--color-success);
+  }
+
+  .metric-orange {
+    background: color-mix(in oklch, var(--color-warning), transparent 92%);
+    color: var(--color-warning);
+  }
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  h1 { font-size: 1.875rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
+  
+  .card {
+    border-radius: var(--radius-md);
+  }
+  
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+}
+
+/* DARK MODE - Système adaptatif harmonieux */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* === MODE SOMBRE ÉQUILIBRÉ === */
+    /* Inversion intelligente pour un confort maximal */
+    
+    /* === COULEURS DE BASE === */
+    --color-background: oklch(0.11 0.005 240);     /* Noir doux, pas agressif */
+    --color-foreground: oklch(0.85 0.003 240);     /* Blanc cassé confortable */
+    
+    /* === SURFACES === */
+    --color-card: oklch(0.28 0.015 240);           /* Cartes bien plus claires avec teinte */
+    --color-card-foreground: oklch(0.92 0.003 240);
+    --color-popover: oklch(0.28 0.015 240);
+    --color-popover-foreground: oklch(0.92 0.003 240);
+    
+    /* === COULEURS FONCTIONNELLES === */
+    --color-primary: oklch(0.65 0.20 258);         /* Bleu plus vif en sombre */
+    --color-primary-foreground: oklch(0.11 0.005 240);
+    
+    --color-secondary: oklch(0.25 0.005 240);      /* Gris sombre */
+    --color-secondary-foreground: oklch(0.85 0.003 240);
+    
+    --color-muted: oklch(0.18 0.005 240);          /* Zone muted sombre */
+    --color-muted-foreground: oklch(0.60 0.005 240);
+    
+    --color-accent: oklch(0.75 0.18 45);           /* Orange plus vif */
+    --color-accent-foreground: oklch(0.11 0.005 240);
+    
+    /* === ÉTATS === */
+    --color-destructive: oklch(0.70 0.20 25);      /* Rouge adapté */
+    --color-destructive-foreground: oklch(0.11 0.005 240);
+    
+    --color-success: oklch(0.70 0.18 142);         /* Vert plus vif */
+    --color-warning: oklch(0.80 0.18 75);          /* Orange vif */
+    --color-info: oklch(0.70 0.18 258);            /* Bleu vif */
+    
+    /* === STRUCTURE === */
+    --color-border: oklch(0.42 0.015 240);         /* Bordures très visibles avec teinte */
+    --color-input: oklch(0.19 0.008 240);          /* Inputs contrastés */
+    --color-ring: oklch(0.65 0.20 258);            /* Focus ring vif */
+    
+    /* === VARIABLES BUSINESS === */
+    --color-neutral: oklch(0.50 0.005 240);
+    --color-revenue: oklch(0.70 0.18 142);
+    --color-expense: oklch(0.70 0.20 25);
+    --color-pending: oklch(0.80 0.18 75);
+    --color-completed: oklch(0.65 0.20 258);
+    
+    /* === BRIDGE VARIABLES TAILWIND === */
+    --background: 240 5% 11%;                      /* Fond sombre doux */
+    --foreground: 240 3% 85%;                      /* Texte clair */
+    
+    --card: 240 15% 28%;                           /* Cartes bien plus claires avec teinte */
+    --card-foreground: 240 3% 92%;
+    
+    --popover: 240 15% 28%;
+    --popover-foreground: 240 3% 92%;
+    
+    --primary: 258 20% 65%;                        /* Bleu vif */
+    --primary-foreground: 240 5% 11%;
+    
+    --secondary: 240 5% 25%;                       /* Gris sombre */
+    --secondary-foreground: 240 3% 85%;
+    
+    --muted: 240 5% 18%;                           /* Zone muted */
+    --muted-foreground: 240 5% 60%;
+    
+    --accent: 45 18% 75%;                          /* Orange vif */
+    --accent-foreground: 240 5% 11%;
+    
+    --destructive: 25 20% 70%;                     /* Rouge adapté */
+    --destructive-foreground: 240 5% 11%;
+    
+    --border: 240 15% 42%;                         /* Bordures très visibles avec teinte */
+    --input: 240 8% 19%;                           /* Inputs */
+    --ring: 258 20% 65%;                           /* Focus */
+    
+    --success: 142 18% 70%;                        /* Statuts adaptés */
+    --warning: 75 18% 80%;
+    --info: 258 18% 70%;
+  }
+}
+
+/* DARK MODE - Class-based selector for forced dark mode */
+.dark {
+  --color-background: oklch(0.11 0.005 240);     /* Noir doux, pas agressif */
+  --color-foreground: oklch(0.85 0.003 240);     /* Blanc cassé confortable */
+  
+  /* === SURFACES === */
+  --color-card: oklch(0.28 0.015 240);           /* Cartes bien plus claires avec teinte */
+  --color-card-foreground: oklch(0.92 0.003 240);
+  --color-popover: oklch(0.28 0.015 240);
+  --color-popover-foreground: oklch(0.92 0.003 240);
+  
+  /* === COULEURS FONCTIONNELLES === */
+  --color-primary: oklch(0.65 0.20 258);         /* Bleu plus vif en sombre */
+  --color-primary-foreground: oklch(0.11 0.005 240);
+  
+  --color-secondary: oklch(0.25 0.005 240);      /* Gris sombre */
+  --color-secondary-foreground: oklch(0.85 0.003 240);
+  
+  --color-muted: oklch(0.18 0.005 240);          /* Zone muted sombre */
+  --color-muted-foreground: oklch(0.60 0.005 240);
+  
+  --color-accent: oklch(0.75 0.18 45);           /* Orange plus vif */
+  --color-accent-foreground: oklch(0.11 0.005 240);
+  
+  /* === ÉTATS === */
+  --color-destructive: oklch(0.70 0.20 25);      /* Rouge adapté */
+  --color-destructive-foreground: oklch(0.11 0.005 240);
+  
+  --color-success: oklch(0.70 0.18 142);         /* Vert plus vif */
+  --color-warning: oklch(0.80 0.18 75);          /* Orange vif */
+  --color-info: oklch(0.70 0.18 258);            /* Bleu vif */
+  
+  /* === STRUCTURE === */
+  --color-border: oklch(0.42 0.015 240);         /* Bordures très visibles avec teinte */
+  --color-input: oklch(0.19 0.008 240);          /* Inputs contrastés */
+  --color-ring: oklch(0.65 0.20 258);            /* Focus ring vif */
+  
+  /* === VARIABLES BUSINESS === */
+  --color-neutral: oklch(0.50 0.005 240);
+  --color-revenue: oklch(0.70 0.18 142);
+  --color-expense: oklch(0.70 0.20 25);
+  --color-pending: oklch(0.80 0.18 75);
+  --color-completed: oklch(0.65 0.20 258);
+  
+  /* === BRIDGE VARIABLES TAILWIND === */
+  --background: 240 5% 11%;                      /* Fond sombre doux */
+  --foreground: 240 3% 85%;                      /* Texte clair */
+  
+  --card: 240 15% 28%;                           /* Cartes bien plus claires avec teinte */
+  --card-foreground: 240 3% 92%;
+  
+  --popover: 240 6% 13%;
+  --popover-foreground: 240 3% 85%;
+  
+  --primary: 258 20% 65%;                        /* Bleu vif */
+  --primary-foreground: 240 5% 11%;
+  
+  --secondary: 240 5% 25%;                       /* Gris sombre */
+  --secondary-foreground: 240 3% 85%;
+  
+  --muted: 240 5% 18%;                           /* Zone muted */
+  --muted-foreground: 240 5% 60%;
+  
+  --accent: 45 18% 75%;                          /* Orange vif */
+  --accent-foreground: 240 5% 11%;
+  
+  --destructive: 25 20% 70%;                     /* Rouge adapté */
+  --destructive-foreground: 240 5% 11%;
+  
+  --border: 240 15% 42%;                         /* Bordures très visibles avec teinte */
+  --input: 240 8% 19%;                           /* Inputs */
+  --ring: 258 20% 65%;                           /* Focus */
+  
+  --success: 142 18% 70%;                        /* Statuts adaptés */
+  --warning: 75 18% 80%;
+  --info: 258 18% 70%;
+}
+
+/* Print styles */
+@media print {
+  * {
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+  
+  .card {
+    border: 1px solid #e5e5e5 !important;
+  }
+}
+
+/* === ANIMATIONS MODERNES === */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+/* Améliorations des transitions pour les cards */
+.card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
